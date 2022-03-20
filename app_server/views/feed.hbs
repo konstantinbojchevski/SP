@@ -1,0 +1,167 @@
+<div class="containter">
+    <div class="row" style="margin: auto">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="filters">
+                <form id="formSearch" method="get" action="/search">
+                    <div class="input-group rounded">
+                        <input type="search" class="form-control rounded" placeholder="Search" name="search" aria-label="Search"
+                               aria-describedby="search-addon" id="search"/>
+                        <button id="search-button" type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <div id="invalidSearch" style="display: none; color: red">Invalid search! Please use at least one letter.</div>
+                    </div>
+                </form>
+                <p style="font-size: 1.5em">Filters:</p>
+                <form id="formFilter" method ="get" action="/filter" novalidate>
+                    <p style="margin-top: 20px"></p>
+                    <label for="location"><p><u>Area</u></p></label>
+                    <div class="dropdown">
+                              <select id="location" name="location" class="btn btn-secondary" style="background-color: whitesmoke; color: #6e757c">
+                                <option value="ljubljana">Ljubljana, Slovenia</option>
+                                <option value="maribor">Maribor, Slovenia</option>
+                                <option value="piran">Piran, Slovenia</option>
+                              </select>
+                    </div>
+                    <p style="margin-top: 20px"></p>
+                    <label for="customRange2" class="form-label"><u>Price</u></label>
+                    <input type="range" class="form-range" min="0" max="50" id="priceRange" onclick="setPrice()" name="price">
+                    <p>
+                        <span>Price up to: </span><span id="price"></span>
+                    </p>
+                    <p><u>Task</u></p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=1 id="checkCare" name="task">
+                        <label class="form-check-label" for="task">
+                            All-day care
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=3 id="checkFeeding" name="task">
+                        <label class="form-check-label" for="task">
+                            Feeding
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=2 id="checkWalk" name="task">
+                        <label class="form-check-label" for="task">
+                            Walking
+                        </label>
+                    </div>
+                    <label for="breed"><p><u>Breed:</u></p></label>
+                    <div class="dropdown">
+                              <select id="breed" name="breed" class="btn btn-secondary" style="background-color: whitesmoke; color: #6e757c">
+                                {{#each breeds}}
+                                <option value="{{@key}}">{{capital @key}}</option>
+                                {{/each}}
+                              </select>
+                    </div>
+                    <button type="submit" class="btn submit" style="background-color: whitesmoke; color: #6e757c">Filter</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-7" id="ads">
+            {{#each ads as |ad|}}
+            <div class="post">
+                <img src="../images/{{ad.dog.0.photourl}}" alt="Lana" class="photoPost">
+                <p class="namePost"><u><b>Name: {{ad.dog.0.dogname}}</b></u></p>
+                <p class="locationPost">Location: {{ad.city}}, Slovenia</p>
+                <p class="infoPost">Task: {{task ad.task}}</p>
+                <p class="infoPost" id="breedId" breed="{{ ad.dog.0.breed}}">Breed: {{ ad.dog.0.breed}}</p>
+                <p class="infoPost">Period: {{dateFormat ad.datefrom}} - {{dateFormat ad.dateto}}</p>
+                <p class="infoPost">Price: {{ad.price}}</p>
+                <a href="ad/{{ad._id}}"><button type="button" class="btn btn-secondary buttonPost">More Info</button></a>
+            </div>
+            {{/each}}
+
+        </div>
+        <div class="col-md-3 sm-3"></div>
+        <div id="chartContainer" style="height: 370px; width: 95% "></div>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </div>
+</div>
+<script>
+    function setPrice() {
+      var price = document.getElementById('priceRange').value;
+      document.getElementById('price').innerHTML=price;
+      console.log(price);
+    }
+    function checkSearch() {
+                let regexSearch = /.*[a-zA-Z].*/;
+                var search = document.getElementById('search').value;
+
+                if(regexSearch.test(search)) {
+                    //console.log("u check search u if");
+                    return true;
+                }
+                else return false;
+            }
+
+    var formSearch = document.getElementById("formSearch");
+    formSearch.addEventListener('submit', function(event) {
+            el=document.getElementById('invalidSearch');
+            if(!checkSearch()){
+                el.style.display = 'block';
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            else {
+                el.style.display = 'none';
+                //console.log("ok search");
+            }
+    }, false);
+
+    window.onload = function () {
+        let oglasi = document.querySelectorAll("#breedId");
+
+        data = {}
+        for(var i = 0; i < oglasi.length; i++) {
+            breed = oglasi[i].getAttribute("breed");
+            if(data[breed]) {
+                data[breed]++
+            } else {
+                data[breed] = 1;
+            }
+        }
+
+        dataPoints = [];
+        for (const property in data) {
+            dataPoints.push({name : property, y:data[property]})
+        }
+        console.log(dataPoints)
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "dark2",
+            exportFileName: "Doughnut Chart",
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "Most common breeds"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "doughnut",
+                innerRadius: 90,
+                showInLegend: true,
+                toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+                indexLabel: "{name} - #percent%",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+
+    }
+</script>

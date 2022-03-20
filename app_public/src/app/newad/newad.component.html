@@ -1,0 +1,149 @@
+<section class="vh-80">
+  <div class="container px-5 h-100">
+    <div class="row px-5 d-flex align-items-center justify-content-center h-100">
+      <h3>Fill the form and publish your new ad:</h3>
+      <div class="container formCont">
+        <form [formGroup]="newadForm" (ngSubmit)="onSubmitPublish()" novalidate>
+          <!-- Name -->
+          <div class="form-group formGroup">
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" id="inputName" name="dogname" aria-describedby="nameHelp" formControlName="dogname" required>
+            <div *ngIf="newadForm.controls['dogname'].invalid" class="info">
+              Put the name of the dog.
+            </div>
+          </div>
+
+          <!-- Breed -->
+          <div class="form-group formGroup">
+            <label>Breed</label>
+            <select id="breedSelect" class="form-select" aria-label="Default select example" name="breed" formControlName="breed" required>
+              <option *ngFor="let breed of breeds | keyvalue" [value]="breed.key | capital">{{breed.key | capital}}</option>
+            </select>
+          </div>
+
+          <!-- Date -->
+          <div class="form-group formGroup">
+            <div class="row">
+              <div class="col-sm-5">
+                <label for="inputFromDate">From Date</label>
+                <input type="date" name="datefrom" class="form-control" id="inputFromDate" aria-describedby="fromDateHelp" formControlName="datefrom" required>
+                <div *ngIf="newadForm.controls['datefrom'].invalid" class="info">
+                  Select date from!
+                </div>
+              </div>
+
+              <div class="col-sm-5">
+                <label for="inputToDate">From Date</label>
+                <input type="date" name="dateto" class="form-control" id="inputToDate" formControlName="dateto" required>
+                <div *ngIf="newadForm.controls['dateto'].invalid" class="info">
+                  Select date to!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Food -->
+          <div class="form-group formGroup">
+            <label>Special food</label>
+
+            <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+              <label class="custom-control-label" for="customRadio1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+              <label class="custom-control-label" for="customRadio2">No</label>
+            </div>
+
+            <small class="form-text text-muted">Select if your dog needs special food.</small>
+          </div>
+
+          <!-- Price -->
+          <div class="form-group formGroup">
+            <label for="priceRange" class="form-label">Price</label>
+            <span class="form-label" style="float: right" id="price"></span>
+            <input type="range" name="price" class="form-range" min="0" max="50" id="priceRange" formControlName="price" (click)="setPrice()" required>
+            <small class="form-text text-muted">Price up to 50 €.</small>
+            <div *ngIf="newadForm.controls['price'].invalid" class="info">
+              Select a price!
+            </div>
+          </div>
+
+          <!-- Task -->
+          <div class="form-group formGroup">
+            <label>Task</label>
+            <select class="form-select" name="task" aria-label="Default select example"  formControlName="task" required>
+              <option selected>Choose a task</option>
+              <option value=1>All-day care</option>
+              <option value=2>Walking</option>
+              <option value=3>Feeding</option>
+            </select>
+            <div *ngIf="newadForm.controls['task'].invalid" class="info">
+              Choose a task!
+            </div>
+          </div>
+
+          <!-- Information -->
+          <div class="form-group formGroup">
+            <p>Additional information</p>
+            <label class="form-label text-muted">Energy level</label>
+            <span class="form-label" style="float: right" id="energy"></span>
+            <input type="range" name="energyLevel" formControlName="energyLevel" class="form-range" min="0" max="100" id="energyRange" (click)="setEnergy()">
+            <label class="form-label text-muted">Good with other dogs</label>
+            <span class="form-label" style="float: right" id="friendly"></span>
+            <input type="range" name= "goodWithDogs" class="form-range" formControlName="goodWithDogs" min="0" max="100" id="friendlyRange" (click)="setFriendly()">
+            <label class="form-label text-muted">Shedding level</label>
+            <span class="form-label" style="float: right" id="shedding"></span>
+            <input type="range" name="shedding" class="form-range" formControlName="shedding" min="0" max="100" id="sheddingRange" (click)="setShedding()">
+            <small class="form-text text-muted">Add more information about your dog - from 0 to 100.</small>
+          </div>
+
+          <!-- Location -->
+          <div class="form-group formGroup">
+            <p>Location</p>
+            <div class="row">
+              <div class="col-sm-5">
+                <label for="inputCity">City</label>
+                <input type="text" name = "city" class="form-control" id="inputCity" aria-describedby="cityHelp" formControlName="city" required>
+                <div *ngIf="newadForm.controls['city'].invalid" class="info">
+                  Put the name of your city.
+                </div>
+              </div>
+
+              <div class="col-sm-5">
+                <label for="inputCountry">Country</label>
+                <input type="text" class="form-control" id="inputCountry" aria-describedby="cityHelp" placeholder="Slovenia" disabled>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo -->
+          <div class="form-group formGroup">
+            <label class="form-label">Photo</label>
+            <input (change)="onFileSelect($event)" type="file" name="dog_pic" class="form-control" id="customFile">
+            <small class="form-text text-muted">Attach a photo of your dog.</small>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group formGroup">
+            <label>Phone number</label>
+            <input type="tel" name="phone" class="form-control" id="inputPhone" formControlName="phone" required>
+            <div *ngIf="newadForm.controls['phone'].invalid" class="info">
+              Please enter your phone number in the correct format (123-456-789).
+            </div>
+          </div>
+
+          <!-- Check -->
+          <div class="form-check formGroup">
+            <input type="checkbox" class="form-check-input" id="Check1" required>
+            <label class="form-check-label" for="Check1">I agree to the Terms and Conditions.</label>
+            <p class="form-text text-danger" id="termsAndCond"></p>
+          </div>
+
+          <button type="submit" class="btn btn-primary publishButton submit" [disabled]="!newadForm.valid && !isConnection()">Publish</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

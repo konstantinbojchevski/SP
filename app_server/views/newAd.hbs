@@ -1,0 +1,260 @@
+<section class="vh-80">
+    <div class="container px-5 h-100">
+        <div class="row px-5 d-flex align-items-center justify-content-center h-100">
+            <h3>Fill the form and publish your new ad:</h3>
+            <div class="container formCont">
+                <form id="formNew" method ="post" action="/newad/request" enctype="multipart/form-data" novalidate>
+<!--                     Name -->
+                    <div class="form-group formGroup">
+                        <label for="inputName">Name</label>
+                        <input type="text" class="form-control" id="inputName" name="dogname" aria-describedby="nameHelp" required>
+                        <small id="nameHelp" class="form-text text-muted">Put the name of the dog.</small>
+                        <div class="invalid-feedback">
+                            Put the name of the dog.
+                        </div>
+                    </div>
+
+                    <!-- Breed -->
+                    <div class="form-group formGroup">
+                        <label>Breed</label>
+                        <select id="breedSelect" class="form-select" aria-label="Default select example" name="breed" required>
+                            {{#each breeds}}
+                            <option value="{{capital @key}}">{{capital @key}}</option>
+                            {{/each}}
+                        </select>
+                        <small id="breedHelp" class="form-text text-muted">Choose the breed of your dog.</small>
+                        <div class="invalid-feedback">
+                            Choose the breed of your dog.
+                        </div>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="form-group formGroup">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="inputFromDate">From Date</label>
+                                <input type="date" name="datefrom" class="form-control" id="inputFromDate" aria-describedby="fromDateHelp" required>
+                                <small id="fromDateHelp" class="form-text text-muted">Select the period of time.</small>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <label for="inputToDate">From Date</label>
+                                <input type="date" name="dateto" class="form-control" id="inputToDate" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food -->
+                    <div class="form-group formGroup">
+                        <label>Special food</label>
+
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">No</label>
+                        </div>
+
+                        <small class="form-text text-muted">Select if your dog needs special food.</small>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="form-group formGroup">
+                        <label for="priceRange" class="form-label">Price</label>
+                        <span class="form-label" style="float: right" id="price"></span>
+                        <input type="range" name="price" class="form-range" min="0" max="50" id="priceRange" onclick="setPrice()" required>
+                        <small class="form-text text-muted">Price up to 50 €.</small>
+                    </div>
+
+                    <!-- Task -->
+                    <div class="form-group formGroup">
+                        <label>Task</label>
+                        <select class="form-select" name="task" aria-label="Default select example" required>
+                            <option selected>Choose a task</option>
+                            <option value=1>All-day care</option>
+                            <option value=2>Walking</option>
+                            <option value=3>Feeding</option>
+                        </select>
+                        <small class="form-text text-muted">Choose a task.</small>
+                    </div>
+
+                    <!-- Information -->
+                    <div class="form-group formGroup">
+                        <p>Additional information</p>
+                        <label class="form-label text-muted">Energy level</label>
+                        <span class="form-label" style="float: right" id="energy"></span>
+                        <input type="range" name="energyLevel" class="form-range" min="0" max="100" id="energyRange" onclick="setEnergy()">
+                        <label class="form-label text-muted">Good with other dogs</label>
+                        <span class="form-label" style="float: right" id="friendly"></span>
+                        <input type="range" name= "goodWithDogs" class="form-range" min="0" max="100" id="friendlyRange" onclick="setFriendly()">
+                        <label class="form-label text-muted">Shedding level</label>
+                        <span class="form-label" style="float: right" id="shedding"></span>
+                        <input type="range" name="shedding" class="form-range" min="0" max="100" id="sheddingRange" onclick="setShedding()">
+                        <small class="form-text text-muted">Add more information about your dog - from 0 to 100.</small>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-group formGroup">
+                        <p>Location</p>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="inputCity">City</label>
+                                <input type="text" name = "city" class="form-control" id="inputCity" aria-describedby="cityHelp" required>
+                                <small id="cityHelp" class="form-text text-muted">Put the name of your city.</small>
+                                    <small id="cityHelp" class="invalid-feedback">Put the name of your city.</small>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <label for="inputCountry">Country</label>
+                                <input type="text" class="form-control" id="inputCountry" aria-describedby="cityHelp" placeholder="Slovenia" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photo -->
+                    <div class="form-group formGroup">
+                        <label class="form-label">Photo</label>
+                        <input type="file" name="dog_pic" class="form-control" id="customFile">
+                        <small class="form-text text-muted">Attach a photo of your dog.</small>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group formGroup">
+                        <label>Phone number</label>
+                        <input type="tel" name="phone" class="form-control" id="inputPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
+                        <small id="phoneHelp" class="form-text text-muted">Please enter your phone number. Format: 123-456-789</small><br><br>
+                    </div>
+
+                    <!-- Check -->
+                    <div class="form-check formGroup">
+                        <input type="checkbox" class="form-check-input" id="Check1" required>
+                        <label class="form-check-label" for="Check1">I agree to the Terms and Conditions.</label>
+                        <p class="form-text text-danger" id="termsAndCond"></p>
+                    </div>
+
+                        <button type="submit" class="btn btn-primary publishButton submit">Publish</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<script>
+
+    nameCheck
+    function nameCheck() {
+        let reg = /[A-Z][a-z]*/;
+        var name = document.getElementById("inputName");
+        if(reg.test(name.value)) {
+            name.setCustomValidity("");
+            document.getElementById("nameHelp").style.display = "none";
+            return true;
+        }
+        name.setCustomValidity("Wrong");
+        document.getElementById("nameHelp").style.display = "none";
+        return false;
+    }
+
+    //cityCheck
+    function cityCheck() {
+        let reg = /[A-Z][a-z]*/;
+        var city = document.getElementById("inputCity");
+        if(reg.test(city.value)) {
+            city.setCustomValidity("");
+            document.getElementById("cityHelp").style.display = "none";
+            return true;
+        }
+        city.setCustomValidity("Wrong");
+        document.getElementById("cityHelp").style.display = "none";
+        return false;
+    }
+
+    //termsCheck
+    function termsCheck() {
+        var checkBox = document.getElementById("Check1");
+        if(checkBox.checked) {
+            checkBox.setCustomValidity("");
+            return true;
+        } else {
+            checkBox.setCustomValidity("Wrong");
+            return false;
+        }
+    }
+
+    //phoneCheck
+    function phoneCheck() {
+        let reg = /[0-9]{3}-[0-9]{3}-[0-9]{3}/;
+        var phone = document.getElementById("inputPhone");
+        if(reg.test(phone.value)) {
+            phone.setCustomValidity("");
+            document.getElementById("phoneHelp").style.display = "none";
+            return true;
+        }
+        phone.setCustomValidity("Wrong");
+        document.getElementById("phoneHelp").innerHTML = "Please enter your phone number. Format: 123-456-789";
+        document.getElementById("phoneHelp").className = "form-text text-danger";
+        return false;
+    }
+
+    //breedCheck
+    function breedCheck() {
+        var breed = document.getElementById("breedSelect");
+        if(breed.value != "Choose a breed") {
+            breed.setCustomValidity("");
+            document.getElementById("breedHelp").style.display = "none";
+            return true;
+        }
+        breed.setCustomValidity("Wrong");
+        document.getElementById("breedHelp").style.display = "none";
+        return false;
+    }
+
+    function checkAll() {
+        var file = document.getElementById('customFile').value;
+        if(file === "" || file === undefined) {
+            file = false;
+            alert("Please select a file");
+        } else
+            file = true;
+
+        var name = nameCheck();
+        var breed = breedCheck();
+        var city = cityCheck();
+        var terms = termsCheck();
+        var phone = phoneCheck();
+
+        return name && breed && city && terms && phone && file;
+    }
+
+    function setPrice() {
+        var price = document.getElementById("priceRange").value;
+        document.getElementById("price").innerHTML = price + " €";
+    }
+    function setEnergy() {
+        var energy = document.getElementById("energyRange").value;
+        document.getElementById("energy").innerHTML = energy;
+    }
+    function setFriendly() {
+        var fr = document.getElementById("friendlyRange").value;
+        document.getElementById("friendly").innerHTML = fr;
+    }
+    function setShedding() {
+        var sh = document.getElementById("sheddingRange").value;
+        document.getElementById("shedding").innerHTML = sh;
+    }
+
+    var formNew = document.getElementById("formNew");
+    formNew.addEventListener('submit', function(event) {
+        if(!checkAll()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        formNew.classList.add("was-validated");
+    }, false)
+
+</script>

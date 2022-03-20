@@ -1,0 +1,55 @@
+<div class="container">
+  <h1 class="nameOfDog">{{ad.dog[0].dogname}}</h1><br>
+  <div class="row">
+    <div class="col-md-3 col-sm-6">
+      <img *ngIf="ad.dog[0].photo" [src]="ad.dog[0].photo | safeurl" class="img-rounded dogPhoto">
+    </div>
+    <div class="col-md-5 col-sm-6">
+      <div class="row">
+
+        <p class="dogDetails">Task: {{ad.task | breed}}<br> Owner: {{ad.username}} <br>Breed: {{ad.dog[0].breed}}<br>Location: {{ad.city}}, Slovenia <br>Period:
+          {{ad.datefrom | dateFormat}}-{{ad.dateto | dateFormat}} <br>
+          Price: ${{ad.price}}<br> Phone number: {{ad.phone}}
+        </p>
+
+        <div>
+          <p class="smallerText" style="width:80%"> <button type="button" class="btn btn-secondary btn-sm" style = "background-color:#ffb700" (click)="getBreedInfo()">Click here</button>
+            to get more information about the breed!</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="div1" class="col-md-4 container infoBreed" id="infoBreed">
+
+      <p style="color:black; text-align: center">Thank you for clicking and requesting more information about this breed! </p><br>
+      <div class="card card-dp characteristics mb-4">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item characteristics">Energy level:
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [style.width.%] = "ad.dog[0].energyLevel" [attr.aria-valuenow]="ad.dog[0].energyLevel" aria-valuemin="0" aria-valuemax="100">{{ad.dog[0].energyLevel}}%</div>
+            </div>
+          </li>
+          <li class="list-group-item characteristics">Good with other dogs:
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [style.width.%]="ad.dog[0].goodWithDogs" [attr.aria-valuenow]="ad.dog[0].goodWithDogs" aria-valuemin="0" aria-valuemax="100">{{ad.dog[0].goodWithDogs}}%</div>
+            </div>
+          </li>
+          <li class="list-group-item characteristics" style="position:relative; bottom:0">Shedding level:
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [style.width.%]="ad.dog[0].shedding" [attr.aria-valuenow]="ad.dog[0].shedding" aria-valuemin="0" aria-valuemax="100">{{ad.dog[0].shedding}}%</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <button type="button" id="apply_for_dog" class="btn btn-secondary" style="float:right;  background-color:#ffb700">Apply</button>
+      <button type="button" *ngIf="isAdmin()" class="btn btn-secondary" (click)="deleteAd()" style="float:right;  background-color:#ffb700">Delete</button>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("apply_for_dog").onclick = function () {
+    location.href = "/payment";
+  };
+</script>

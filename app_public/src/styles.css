@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+
+body {
+  background-color: #2fa8c4;
+  font-family: 'Open Sans';
+  color: white;
+}
+
+.dogPhoto {
+  width: 100%;
+  height: auto;
+}
+
+.personPhoto {
+  width: 50%;
+  height: auto;
+  padding-right: inherit;
+  float: right;
+}
+
+.info {
+  /*font-family: Constantia;*/
+
+}
+.nameOfDog {
+  padding-left: 100px;
+  font-size: 2.5em;
+  text-align:center;
+  color:#ffb700;
+}
+.dogDetails {
+  font-size: 2em;
+}
+.smallerText{
+  font-size: 1.5em;
+  font-style: italic;
+  color: #ffb700;
+}
+.infoBreed{
+  /*font-family: "Rage Italic";*/
+  font-style: oblique;
+}
+
+.characteristics {
+  width: 100%;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), #ffb700);
+  color:black;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.buttonPost {
+  float:bottom;
+}
+
+.photoPost {
+  width: 200px;
+  height: 200px;
+  float: top;
+  padding:10px;
+  border-radius: 20px;
+}
+
+@media screen and (min-width: 400px) {
+  .photoPost {
+    float: left;
+  }
+  .buttonPost {
+    float: right;
+  }
+}
+
+.namePost {
+  color: black; font-size: 1.5em; margin-bottom: 0.3em;
+}
+
+.locationPost {
+  color: dimgray; font-size:0.8em; margin-bottom: 0.5em;
+}
+
+.infoPost {
+  color: black; margin-bottom: 0.3em;
+}
+
+@media screen and (min-width: 400px) {
+  .filters{
+    margin: 50px 0px 50px 0px;
+  }
+  .post {
+    margin: 50px 0px 50px 0px;
+  }
+  .aboutUS {
+    margin: 0px 0px 0px 0px;
+  }
+  .aboutUsPhoto {
+    margin: 0px 0px 0px 0px;
+  }
+}
+
+.filters{
+  padding: 20px; background-color: #6e757c;
+  border-radius: 4px;
+  margin: 50px 15px 50px 15px;
+}
+
+.post {
+  margin: 50px 15px 50px 15px; padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow:hidden
+}
+
+.reg-label {
+  margin:20px 0;
+  position:relative;
+  display:inline-block;
+  width: 100%;
+}
+
+.reg-span {
+  padding: 10px;
+  position:absolute;
+  color: gray;
+  font-weight: bold;
+  font-size: large;
+  left:0;
+  top:0;
+  transition: 0.2s;
+  transition-timing-function: ease;
+  opacity:0.5;
+}
+
+.reg-input {
+  padding:10px;
+}
+
+.reg-input:focus + span, input:not(:placeholder-shown) + span {
+  opacity:1;
+  transform: scale(0.75) translateY(-100%) translateX(-20%);
+  color: white;
+}
+
+.card-dp {
+  display: grid;
+  height: 280px;
+  width: 400px;
+}
+
+.homepage-search {
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+.hp-src {
+  border-radius: 40px;
+  height: 80px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+.card-hp {
+  width: 400px;
+  height: 600px;
+  border-radius: 40px;
+}
+
+
+.forHover {
+  text-align: center;
+  float: left;
+  max-width: 31%;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: black;
+  opacity: 0;
+}
+.deleteOption {
+  background-color: #ffb700;
+}
+
+.deleteOption:hover {
+  opacity:0;
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+}
+
+.overlay:hover {
+  size: auto;
+  align-content: center;
+  opacity:0.5;
+
+}
+
+.central:hover {
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.5);
+}
+
+.formGroup {
+  padding-top: 3%;
+}
+
+.publishButton {
+  float: right;
+}
+
+.formCont {
+  padding-top: 3%;
+  padding-left: 21%;
+  padding-right: 21%
+}
+
+.accordion-section .panel-default .panel-heading {
+  background: #ffffff;
+}
+.accordion-section .panel-default a {
+  display: block;
+  font-size: 1.5rem;
+}
+.accordion-section .panel-default .panel-title a:after {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-size: 3rem;
+  content: "\f106";
+  color: #2fa8c4;
+  float: right;
+  margin-top: -12px;
+}
+.accordion-section .panel-default .panel-title a.collapsed:after {
+  content: "\f107";
+}
+.accordion-section .panel-default .panel-body {
+  font-size: 1.2rem;
+}
+
+.card-pm {
+}
+
+.aboutUsText {
+  text-align: justify;
+  line-height: 1.8;
+}
+
+.aboutUsPhoto {
+  width: 300px;
+  float: top;
+  margin: 0px 15px 0px 15px;
+}
+
+.aboutUS {
+  margin: 0px 15px 0px 15px;
+}
+
+

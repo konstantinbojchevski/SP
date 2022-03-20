@@ -1,0 +1,24 @@
+<section class="vh-80">
+    <div class="container px-5 h-100">
+        <div class="row px-5 d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-5 d-flex align-items-center justify-content-center">
+                <form id="initialForm" action="/register/request" method="post">
+                    <input type="hidden" id="firstName" name="firstName" value="Petar"/>
+                    <input type="hidden" id="lastName" name="lastName" value="Petrov"/>
+                    <input type="hidden" id="dateOfBirth" name="dateOfBirth" value="2021-11-24"/>
+                    <input type="hidden" id="numberOfPets" name="numberOfPets" value="1"/>
+                    <input type="hidden" id="location" name="location" value="Ljubljana"/>
+                    <input type="hidden" id="username" name="username" value="petar_petrov"/>
+                    <input type="hidden" id="email" name="email" value="petarpetrov@gmail.com"/>
+                    <input type="hidden" id="password" name="password" value="12345678"/>
+                    <button type="submit" style="align-items: center" class="btn btn-outline-light btn-lg btn-success submit">Add initial user</button>
+                </form>
+            </div>
+            <div class="col-md-5 d-flex align-items-center justify-content-center">
+                <form id="clearCollections" action="/clear" method="get">
+                    <button type="submit" class="btn btn-outline-light btn-lg btn-danger submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,71 @@
+
+    <div class="modal-content" style="background-color: #2fa8c4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="welcomeBack" style="text-align: center">Welcome back!</h5>
+        <button type="button" class="btn close"  aria-label="Close" style="color: white" (click)="activeModal.dismiss('Cross click') ">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form [formGroup]="logForm" (ngSubmit)="login()" novalidate>
+            <!-- Username input -->
+            <label class="reg-label mb-1 mt-2">
+              <input type="text" id="username" class="form-control form-control-lg reg-input" name="username" formControlName="username" placeholder=" " />
+              <span class="reg-span"> Username</span>
+              <div class="invalid-feedback">Invalid username!</div>
+            </label>
+
+            <!-- Password input -->
+            <label class="reg-label mb-4">
+              <input type="password" id="password" class="form-control form-control-lg reg-input" placeholder=" " name="password" formControlName="password" required/>
+              <span class="reg-span">Password</span>
+              <div class="invalid-feedback">Invalid password!</div>
+            </label>
+
+            <div class="d-flex justify-content-around align-items-center mb-4">
+              <!-- Checkbox -->
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="form1Example3"
+                  checked
+                />
+                <label class="form-check-label" for="form1Example3"> Remember me </label>
+              </div>
+              <a href="#">Forgot password?</a>
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-outline-light btn-lg submit" [disabled]="!isConnection()">Sign in</button>
+            </div>
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+
+          </form>
+
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-light btn-lg fb" href="#" role="button">
+              <i class="fab fa-facebook"></i> Continue with Facebook
+            </a>
+          </div>
+          <p></p>
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-light btn-lg" role="button">
+              <i class="fab fa-twitter"></i> Continue with Twitter
+            </a>
+          </div>
+          <p></p>
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-light btn-lg" href="#" role="button">
+              <i class="fab fa-google"></i> Continue with Google
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+

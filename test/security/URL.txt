@@ -1,0 +1,6 @@
+http://localhost:3000/
+http://localhost:3000/feed
+http://localhost:3000/faq
+http://localhost:3000/aboutus
+http://localhost:3000/register
+http://localhost:3000/ad/61a0c5ef3362b1e1321921b3

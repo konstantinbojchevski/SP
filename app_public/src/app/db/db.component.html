@@ -1,0 +1,11 @@
+<div class="row px-5 d-flex align-items-center justify-content-center h-100">
+  <div *ngIf="deleted">Deleted database entries</div>
+  <div *ngIf="added">Added database entries</div>
+  <div class="col-md-5 d-flex align-items-center justify-content-center">
+      <button style="align-items: center" class="btn btn-outline-light btn-lg btn-success submit" (click)="add()">Fill DB</button>
+  </div>
+  <div class="col-md-5 d-flex align-items-center justify-content-center">
+      <button class="btn btn-outline-light btn-lg btn-danger submit" (click)="delete()">Delete</button>
+  </div>
+</div>
+

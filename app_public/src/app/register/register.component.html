@@ -1,0 +1,139 @@
+<section class="vh-80">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-7 col-lg-6 col-xl-5">
+        <img src="assets/dogos.png" class="img-fluid" alt="Dogos">
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5">
+        <form [formGroup]="regForm" (ngSubmit)="onSubmit()" novalidate>
+          <!-- First and last name -->
+          <div class="row">
+            <div class="form-outline col-md-6 col-sm-6">
+              <label class="reg-label mb-1">
+                <input type="text" id="firstName" class="form-control form-control-lg reg-input" name="firstName" formControlName="firstName" placeholder=" " />
+                <span class="reg-span">First Name</span>
+                <div *ngIf="regForm.controls['firstName'].invalid" class="info">
+                  Only letters and spaces allowed!
+                </div>
+              </label>
+            </div>
+            <div class="form-outline col-md-6 col-sm-6">
+              <label class="reg-label mb-1">
+                <input type="text" id="lastName" class="form-control form-control-lg reg-input" name="lastName" formControlName="lastName" placeholder=" " />
+                <span class="reg-span">Last Name</span>
+                <div *ngIf="regForm.controls['lastName'].invalid" class="info">
+                  Only letters and spaces allowed!
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-outline col-md-6 col-sm-6">
+              <label class="reg-label mb-1">
+                <input type="date" id="dateOfBirth" class="form-control form-control-lg reg-input" name="dateOfBirth" formControlName="dateOfBirth" placeholder=" " />
+                <span class="reg-span">Date of birth</span>
+                <div *ngIf="regForm.controls['dateOfBirth'].invalid" class="info">
+                  Select date of birth!
+                </div>
+              </label>
+            </div>
+            <div class="form-outline col-md-6 col-sm-6">
+              <label class="reg-label mb-1">
+                <input type="number" id="numberOfPets" min="0" class="form-control form-control-lg reg-input" name="numberOfPets"formControlName="numberOfPets" placeholder=" " />
+                <span class="reg-span">Number of Pets</span>
+                <div *ngIf="regForm.controls['numberOfPets'].invalid" class="info">
+                  Choose number of pets!
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <label class="reg-label mb-1">
+            <input type="text" id="location" class="form-control form-control-lg reg-input" name="location" formControlName="location" placeholder=" " />
+            <span class="reg-span">City</span>
+            <div *ngIf="regForm.controls['location'].invalid" class="info">
+              Enter a city!
+            </div>
+          </label>
+
+          <!-- Username input -->
+          <label class="reg-label mb-1">
+            <input type="text" id="newUsername" class="form-control form-control-lg reg-input" name="username" formControlName="username" placeholder=" " />
+            <span class="reg-span">Username</span>
+            <div *ngIf="regForm.controls['username'].invalid" class="info">
+              Only letters, digits and _ allowed!
+            </div>
+          </label>
+
+          <!-- Email input -->
+          <label class="reg-label mb-1">
+            <input type="email" id="email" class="form-control form-control-lg reg-input" name="email" formControlName="email" placeholder=" " />
+            <span class="reg-span">Email</span>
+            <div *ngIf="regForm.controls['email'].invalid" class="info">
+              Enter valid email address!
+            </div>
+          </label>
+
+          <!-- Password input -->
+          <label class="reg-label mb-1">
+            <input type="password" id="newPassword" class="form-control form-control-lg reg-input" name="password" formControlName="password" placeholder=" " required/>
+            <span class="reg-span">Password</span>
+            <div *ngIf="regForm.controls['password'].invalid" class="info">
+              Password must be at least 8 characters!
+            </div>
+          </label>
+
+          <!-- Confirm password input -->
+          <label class="reg-label">
+            <input type="password" id="password2" class="form-control form-control-lg reg-input" formControlName="password2" placeholder=" " />
+            <span class="reg-span">Confirm password</span>
+            <div *ngIf="regForm.errors?.['passwordsDontMatch']" class="info">
+              Passwords don't match!
+            </div>
+          </label>
+
+          <div class="d-flex justify-content-around align-items-center mb-4">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="termsAndCond" required>
+              <label class="form-check-label" for="termsAndCond">
+                Agree to terms and conditions
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-outline-light btn-lg submit" [disabled]="!regForm.valid && !isConnection()">Register</button>
+          </div>
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+          </div>
+
+        </form>
+
+        <!-- Facebook button -->
+        <div class="d-grid gap-2 mb-4">
+          <a class="btn btn-outline-light btn-lg fb" href="#" role="button">
+            <i class="fab fa-facebook"></i> Continue with Facebook
+          </a>
+        </div>
+
+        <!-- Twitter button -->
+        <div class="d-grid gap-2 mb-4">
+          <a class="btn btn-outline-light btn-lg" role="button">
+            <i class="fab fa-twitter"></i> Continue with Twitter
+          </a>
+        </div>
+
+        <!-- Google button -->
+        <div class="d-grid gap-2">
+          <a class="btn btn-outline-light btn-lg" href="#" role="button">
+            <i class="fab fa-google"></i> Continue with Google
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

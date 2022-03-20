@@ -1,0 +1,86 @@
+<div class="containter">
+  <div class="row" style="margin: auto">
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+      <div class="filters">
+        <form id="formSearch" [formGroup]="searchForm" (ngSubmit)="onSubmitSearch()">
+          <div class="input-group rounded">
+            <input type="search" class="form-control rounded" placeholder="Search" name="search" aria-label="Search"
+                   aria-describedby="search-addon" id="search" formControlName="search"/>
+            <button id="search-button" type="submit" class="btn btn-primary">
+              <i class="fa fa-search"></i>
+            </button>
+            <div *ngIf="searchForm.controls['search'].invalid" class="info">
+              Invalid search! Please use at least one letter.
+            </div>
+          </div>
+        </form>
+        <p style="font-size: 1.5em">Filters:</p>
+        <form [formGroup]="filterForm" (ngSubmit)="onSubmitFilter()" id="formFilter" novalidate>
+          <p style="margin-top: 20px"></p>
+          <label for="location"><p><u>Area</u></p></label>
+          <div class="dropdown">
+            <select id="location" name="location" class="btn btn-secondary" formControlName="area" style="background-color: whitesmoke; color: #6e757c">
+              <option value="ljubljana">Ljubljana, Slovenia</option>
+              <option value="maribor">Maribor, Slovenia</option>
+              <option value="piran">Piran, Slovenia</option>
+            </select>
+          </div>
+          <p style="margin-top: 20px"></p>
+          <label for="customRange2" class="form-label"><u>Price</u></label>
+          <input type="range" class="form-range" min="0" max="50" id="priceRange" formControlName="price" (click)="setPrice()" name="price">
+          <p>
+            <span>Price up to: </span><span id="price"></span>
+          </p>
+          <p><u>Task</u></p>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value=1 id="checkCare" name="task" formControlName="task">
+            <label class="form-check-label" for="task">
+              All-day care
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value=3 id="checkFeeding" name="task" formControlName="task">
+            <label class="form-check-label" for="task">
+              Feeding
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value=2 id="checkWalk" name="task" formControlName="task">
+            <label class="form-check-label" for="task">
+              Walking
+            </label>
+          </div>
+          <label for="breed"><p><u>Breed:</u></p></label>
+          <div class="dropdown">
+            <select id="breed" name="breed" class="btn btn-secondary" formControlName="breed" style="background-color: whitesmoke; color: #6e757c">
+              <option *ngFor="let breed of breeds | keyvalue" [value]="breed.key | capital">{{breed.key | capital}}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn submit" style="background-color: whitesmoke; color: #6e757c">Filter</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-7" id="ads">
+        <div class="post" *ngFor="let ad of ads | slice: (page-1) * pageSize : page * pageSize">
+          <img *ngIf="ad.dog[0].photo" [src]="ad.dog[0].photo | safeurl" class="photoPost">
+          <p class="namePost"><u><b>Name: {{ad.dog[0].dogname}}</b></u></p>
+          <p class="locationPost">Location: {{ad.city}}, Slovenia</p>
+          <p class="infoPost">Task: {{ad.task | breed}}</p>
+          <p class="infoPost" id="breedId" [attr.breed]="ad.dog[0].breed">Breed: {{ad.dog[0].breed}}</p>
+          <p class="infoPost">Period: {{ad.datefrom | dateFormat}} - {{ad.dateto | dateFormat}}</p>
+          <p class="infoPost">Price: {{ad.price}}</p>
+          <a routerLink="/ad/{{ad._id}}"><button type="button" class="btn btn-secondary buttonPost">More Info</button></a>
+        </div>
+      <div *ngIf="ads.length > 10">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="ads.length" ></ngb-pagination>
+      </div>
+
+    </div>
+    <div class="col-md-3 sm-3"></div>
+    <div id="chartContainer" style="height: 370px; width: 95% "></div>
+  </div>
+</div>

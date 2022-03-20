@@ -1,0 +1,11 @@
+<div class="modal-content" style="background-color: #2fa8c4">
+  <div class="modal-header">
+    <h2 class="modal-title">{{this.errorHead}}</h2>
+    <button type="button" class="btn close" aria-label="Close"  (click)="activeModal.dismiss('Cross click')"style="color: white">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{this.error}}
+  </div>
+</div>

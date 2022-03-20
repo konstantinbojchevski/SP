@@ -1,0 +1,64 @@
+<div class="container mb-3">
+  <div class="row">
+    <div class="col-md-12 info">
+      <h1 style="text-align: center">{{user.firstName}} {{user.lastName}}</h1>
+      <p class="smallerText">Age: {{user.dateOfBirth | age}} <br>Location: {{user.location}}<br>Known pets: {{user.numberOfPets}}<br>Previous advertisements: {{user.previousAds}}<br>
+      </p><p><b><u>If you want to post an ad or be a nanny, you need to insert your wallet ID:</u></b> </p>
+
+      <div class="row">
+        <form [formGroup]="walletForm" id="walletForm" (ngSubmit)="addWallet()" novalidate>
+          <div class="col-md-6 form-group">
+            <label for="walletID"></label>
+            <input type="password" class="form-control" id="walletID" placeholder="WalletID" aria-describedby="walletHelp" name="wallet" formControlName="wallet">
+            <small id="walletHelp" class="form-text text-muted">Please insert your wallet ID.</small>
+          </div>
+          <button type="submit" class="btn btn-outline-light btn-lg submit" [disabled]="!isConnection()">Save wallet</button>
+        </form>
+
+      </div>
+    </div>
+
+<!--    <div id="wallets">-->
+<!--      <p *ngIf="user.wallet.wallet">{{user.wallet.wallet}}</p>-->
+<!--    </div>-->
+  </div>
+</div>
+
+<div class="container">
+  <h1>Your current advertisements:</h1>
+  <div>
+    <div class = "container">
+      <div class="row" *ngFor="let ad of ads">
+        <div class="post col-md-6" id="post1" style="background-color: #ffb700">
+          <div class="row">
+            <div class="col-md">
+              <!--                                <img src="../images/{{ad.dog.0.photourl}}" alt="Ara" class="photoPost">-->
+              <img *ngIf="ad.dog[0].photo" [src]="ad.dog[0].photo | safeurl" class="photoPost">
+              <p class="namePost"><u><b>{{ad.dog[0].dogname}}</b></u></p>
+              <p class="locationPost">Location: {{ad.city}}, Slovenia</p>
+              <p class="infoPost">Task: {{ad.task | breed}}</p>
+              <p class="infoPost">Breed: {{ad.dog[0].breed}}</p>
+              <p class="infoPost">Period: {{ad.datefrom | date}} - {{ad.dateto | date}}</p>
+              <p class="infoPost">Price: {{ad.price}}</p>
+              <p class="infoPost">Phone: {{ad.phone}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-secondary buttonPost col-md-4"><a style="color: white" routerLink="/ad/{{ad._id}}">More Info</a></button>
+            <button type="button" class="btn btn-secondary buttonPost col-md-4" (click)="editAd(ad)" >Edit Ad</button>
+            <button type="button" class="btn btn-secondary buttonPost col-md-4" (click)="deleteAd(ad._id)">Delete Ad</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "container">
+  <h1><i class="bi bi-plus-square" style="font-size: 3rem"></i> Add more:
+    <a routerLink="/newad" class="newAd"><button type="button" class="btn btn-secondary" style=" background-color:#ffb700">HERE</button></a></h1>
+</div>
+
+<div class="container">
+  <button class="float-right btn btn-secondary" (click)="deleteUser()"style=" background-color:#ffb700">Delete account!</button>
+</div>

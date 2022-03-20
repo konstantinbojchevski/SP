@@ -1,0 +1,70 @@
+
+    <div class="modal-content" style="background-color: #2fa8c4">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit your ad</h2>
+        <button type="button" class="btn close" (click)="activeModal.dismiss('Cross click')" aria-label="Close" style="color: white">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editing" [formGroup]="editadForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="container" style="max-width:100%;">
+
+            <div class="row" style="padding-bottom: 3%">
+              <div class="col-md-6">
+
+                <div>
+                  <div class="form-group formGroup">
+                    <input type="text" name="dogname" class="form-control" id="dogName" formControlName="dogname" [value]="ad.dog[0].dogname" required>
+                  </div>
+
+                  <div class="form-group formGroup">
+                    <label>From date:</label>
+                    <input type="date" name="datefrom" class="form-control" formControlName="datefrom" [value]="ad.datefrom" id="fromDate">
+                    <label>To date:</label>
+                    <input type="date" name="dateto" class="form-control" formControlName="dateto" [value]="ad.dateto" id="toDate">
+                  </div>
+
+
+                  <div class="form-group formGroup">
+                    <label>Task</label>
+                    <select class="form-select" name="task" aria-label="Default select example" formControlName="task" required>
+                      <option selected>{{ad.task | breed}}</option>
+                      <option value="1">All-day care</option>
+                      <option value="2">Walking</option>
+                      <option value="3">Feeding</option>
+                    </select>
+                    <small class="form-text text-muted">Choose a task.</small>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6" style="padding-left: 5%">
+                <div>
+
+                  <div class="form-group formGroup">
+                    <label class="form-label">Price:</label>
+                    <input type="range" name="price" min="0" max="50" formControlName="price" [value]="ad.price" class="form-range">
+                    <p class="form-text text-muted">Chosen price: {{ad.price}}$</p>
+                  </div>
+
+                  <div class="form-group formGroup">
+                    <label class="form-label">Location:</label>
+                    <input type="text" name="city" formControlName="city" [value]="ad.city" class="form-control">
+                  </div>
+
+                  <div class="form-group formGroup">
+                    <label><br>Phone number:</label>
+                    <input type="tel" [value]="ad.phone" name="phone" formControlName="phone" class="form-control" id="inputPhone" placeholder="e.g. 123-456-789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"required>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cross click')">Close</button>
+          <button type="submit" class="btn btn-primary submit" [disabled]="!isConnection()">Save changes</button>
+        </form>
+      </div>
+    </div>

@@ -1,0 +1,268 @@
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-md-12 info">
+            <h1 style="text-align: center">{{user.firstName}} {{user.lastName}}</h1>
+            <p class="smallerText">Age: {{calcAge user.dateOfBirth}} </br>Location: {{user.location}}</br>Known pets: {{user.numberOfPets}}</br>Previous advertisements: {{user.previousAds}}</br>
+            </p><p><b><u>If you want to post an ad or be a nanny, you need to insert your wallet ID:</u></b> </p>
+
+            <div class="row">
+                <form method="post" action="/wallet/{{user._id}}" id="walletForm" novalidate>
+                    <div class="col-md-6 form-group">
+                        <label for="walletID"></label>
+                        <input type="password" class="form-control" id="walletID" placeholder="WalletID" aria-describedby="walletHelp" name="wallet">
+                        <small id="walletHelp" class="form-text text-muted">Please insert your wallet ID.</small>
+                    </div>
+                    <button type="submit" class="btn btn-outline-light btn-lg submit" >Save wallet</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div id="wallets">
+            {{#if user.wallet.0.wallet}}
+                <p style="display:none">{{user.wallet.0.wallet}}</p>
+            {{/if}}
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <h1>Your current advertisements:</h1>
+    <div>
+        <div class = "container">
+            <div class="row">
+                {{#each ads as |ad|}}
+                    <div class="post col-md-6" id="post1" style="background-color: #ffb700">
+                        <div class="row">
+                            <div class="col-md">
+                                <img src="../images/{{ad.dog.0.photourl}}" alt="Ara" class="photoPost">
+                                <p class="namePost"><u><b>{{ad.dog.0.name}}</b></u></p>
+                                <p class="locationPost">{{ad.city}}, Slovenia</p>
+                                <p class="infoPost">Task: {{task ad.task}}</p>
+                                <p class="infoPost">Breed: {{ad.dog.0.breed}}</p>
+                                <p class="infoPost">Period: {{dateFormat ad.datefrom}}-{{dateFormat ad.dateto}}</p>
+                                <p class="infoPost">Price: {{ad.price}}$</p>
+                                <p class="infoPost">Phone: {{ad.phone}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-secondary buttonPost col-md-4"><a style="color: white" href="/ad/{{ad._id}}">More Info</a></button>
+                            <button type="button" class="btn btn-secondary buttonPost col-md-4" data-toggle="modal" data-target="#editAdPopup{{@index}}">Edit Ad</button>
+                            <button type="button" class="btn btn-secondary buttonPost col-md-4" data-toggle="modal" data-target="#deleteAdPopup{{@index}}">Delete Ad</button>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal" id="editAdPopup{{@index}}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-color: #2fa8c4">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Edit your ad</h2>
+                                    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close" style="color: white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editing" action="/editAd/{{ad._id}}" method="post" novalidate>
+                                        <div class="container" style="max-width:100%;">
+
+                                            <div class="row" style="padding-bottom: 3%">
+                                                <div class="col-md-6">
+
+                                                    <div>
+                                                        <div class="form-group formGroup">
+                                                            <input type="text" name="dogname" class="form-control" id="dogName" value="{{ad.dog.0.dogname}}" required>
+                                                        </div>
+
+                                                        <div class="form-group formGroup">
+                                                            <label>From date:</label>
+                                                            <input type="date" name="datefrom" class="form-control" value="{{dateForm ad.datefrom}}" id="fromDate">
+                                                            <label>To date:</label>
+                                                            <input type="date" name="dateto" class="form-control" value={{dateForm ad.dateto}} id="toDate">
+                                                        </div>
+
+
+                                                        <div class="form-group formGroup">
+                                                            <label>Task</label>
+                                                            <select class="form-select" name="task" aria-label="Default select example" required>
+                                                                <option selected>{{task ad.task}}</option>
+                                                                <option value="1">All-day care</option>
+                                                                <option value="2">Walking</option>
+                                                                <option value="3">Feeding</option>
+                                                            </select>
+                                                            <small class="form-text text-muted">Choose a task.</small>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" style="padding-left: 5%">
+                                                    <div>
+
+                                                        <div class="form-group formGroup">
+                                                            <label class="form-label">Price:</label>
+                                                            <input type="range" name="price" min="0" max="50" value="{{ad.price}}" class="form-range">
+                                                            <p class="form-text text-muted">Chosen price: {{ad.price}}$</p>
+                                                        </div>
+
+                                                        <div class="form-group formGroup">
+                                                            <label class="form-label">Location:</label>
+                                                            <input type="text" name="city" value="{{ad.city}}" class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group formGroup">
+                                                            <label></br>Phone number:</label>
+                                                            <input type="tel" value="{{ad.phone}}" name="phone" class="form-control" id="inputPhone" placeholder="e.g. 123-456-789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"required>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary submit" id="savechanges">Save changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal" id="deleteAdPopup{{@index}}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-color: #2fa8c4">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Delete your ad</h2>
+                                    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close" style="color: white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="container" style="max-width:100%;">
+
+                                        <div class="row" style="padding-bottom: 3%">
+                                            <p>Are you sure you want to delete this ad?</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <a href="/deleteDog/{{ad._id}}"><button type="button" class="btn btn-danger" id ="deleteThisAd">Delete</button></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class = "container">
+    <h1><i class="bi bi-plus-square" style="font-size: 3rem"></i> Add more:
+        <a href="#" class="newAd"><button type="button" class="btn btn-secondary" style=" background-color:#ffb700">HERE</button></a></h1>
+</div>
+
+<div class="container">
+    <a href="/user/delete/{{user.username}}"><button class="float-right btn btn-secondary" style=" background-color:#ffb700">Delete account!</button></a>
+</div>
+
+
+<script>
+
+    function checkwallet(){
+        let reg = /^[a-fA-F0-9]{40}$/
+        var walletID = document.getElementById("walletID");
+        if(reg.test(walletID.value)) {
+            walletID.setCustomValidity("");
+            alert("Wallet saved")
+            return true;
+        }
+        walletID.setCustomValidity("The structure of the ID is incorrect");
+        alert("Wrong format of wallet")
+        return false;
+    }
+
+    function phoneCheck() {
+        let reg = /[0-9]{3}-[0-9]{3}-[0-9]{3}/;
+        var phone = document.getElementById("inputPhone");
+        if(reg.test(phone.value)) {
+            phone.setCustomValidity("");
+            return true;
+        }
+        phone.setCustomValidity("Invalid number");
+        return false;
+    }
+
+    function nameCheck() {
+        let reg = /[a-zA-Z]*/;
+        var dogName = document.getElementById("dogName");
+        if(reg.test(dogName.value)) {
+            dogName.setCustomValidity("");
+            return true;
+        }
+        dogName.setCustomValidity("Name of dog not written");
+        return false;
+    }
+
+    function checkDate(){
+        from = document.getElementById("fromDate").value;
+        console.log(from);
+
+        to = document.getElementById("toDate").value;
+        return !!(from && to);
+    }
+
+    function submitCheck() {
+        phone = phoneCheck();
+        dogName = nameCheck();
+        date = checkDate();
+
+        if (!(phone && dogName && date)){
+            alert("At least one field is invalid!")
+            return false;
+        }
+        else {
+            alert("The ad was updated!")
+            return true;
+        }
+    }
+
+    edit = document.getElementById("editing");
+    if(edit) {
+        document.getElementById("editing").addEventListener('submit', function (event) {
+            if (!submitCheck()) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+        });
+    }
+
+    document.getElementById("walletForm").addEventListener('submit', function(event){
+        if(!checkwallet()) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+    });
+
+    del = document.getElementById("deleteThisAd");
+    if(del) {
+        document.getElementById("deleteThisAd").addEventListener('click', function () {
+            card = document.getElementById("post1").remove();
+        });
+    }
+
+    wallets = document.getElementById("wallets").children
+    if(wallets.length > 0) {
+        document.querySelector(".newAd").setAttribute("href", "/newAd");
+    }
+
+</script>
